@@ -11,7 +11,7 @@ const room=$('room'),character=$('character');
 character.dataset.direction='down';
 function place(){character.style.left=position.x+'%';character.style.top=position.y+'%'}place();
 // Obstacles are furniture footprints in normalized floor-plan coordinates.
-const blocks=[[3,2,33,29],[34,2,96,30],[4,44,29,96],[43,53,60,84],[64,64,98,98]];
+const blocks=[[3,2,33,29],[34,2,96,30],[4,44,29,96],[43,53,60,84],[64,64,98,98],[95,33,99,61]];
 function blocked(x,y){return x<4||x>96||y<32||y>94||blocks.some(([a,b,c,d])=>x>=a&&x<=c&&y>=b&&y<=d)}
 function pathTo(target){const step=2,key=(x,y)=>x+','+y,snap=v=>Math.round(v/step)*step;let sx=snap(position.x),sy=snap(position.y),gx=snap(target.x),gy=snap(target.y);if(blocked(gx,gy))return null;const queue=[[sx,sy]],seen=new Set([key(sx,sy)]),prev=new Map();for(let i=0;i<queue.length;i++){const [x,y]=queue[i];if(x===gx&&y===gy){let p=[{x:gx,y:gy}],k=key(x,y);while(prev.has(k)){const n=prev.get(k);p.push({x:n[0],y:n[1]});k=key(...n)}return p.reverse().slice(1).concat([target])}for(const [dx,dy] of [[2,0],[-2,0],[0,2],[0,-2]]){const nx=x+dx,ny=y+dy,k=key(nx,ny);if(!seen.has(k)&&!blocked(nx,ny)){seen.add(k);prev.set(k,[x,y]);queue.push([nx,ny])}}}return null}
 for(const z of zones){const b=document.createElement('button');b.className='zone';b.dataset.zone=z.id;b.style.left=z.x+'%';b.style.top=z.y+'%';b.innerHTML=`<span>${z.icon}</span>${z.name}`;b.onclick=e=>{e.stopPropagation();go(z)};$('zones').append(b);}
