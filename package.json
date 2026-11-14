@@ -1,1 +1,11 @@
-{"name":"lisas-little-room","version":"1.0.0","private":true,"type":"module","scripts":{"dev":"node server.js","start":"node server.js","test":"node tests/smoke.cjs"}}
+{
+  "name": "lisas-little-room",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "node server.js",
+    "start": "node server.js",
+    "test": "node tests/smoke.cjs && node tests/music.cjs"
+  }
+}
