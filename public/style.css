@@ -16,3 +16,20 @@ footer{width:100%;margin:12px 0;font-size:9px}.character{width:clamp(48px,6vw,75
 @media(max-height:760px){header{height:50px}.page-title{padding:8px 0}.eyebrow,.page-title p,.day-label small{display:none}h1{font-size:19px}.game,.destinations{width:min(100%,calc((100dvh - 330px)*2))}.dashboard{height:70px}.avatar{width:42px;height:42px}.profile-name{font-size:20px}.character{width:50px;height:68px}.spot small{display:none}.spot{padding:7px}.section-label{display:none}footer{margin:8px 0}.zone{font-size:10px;padding:6px 10px}.action-menu{padding:10px}.action-menu button:not(.close){padding:8px}}
 @media(max-height:850px){.dashboard{gap:12px;padding:9px 12px}.profile{min-width:130px;gap:8px}.clock{min-width:105px;padding-left:10px}.meters{gap:12px;min-width:0}.meter{min-width:0}.spot{min-width:0}.spot-icon{width:25px;height:25px;flex-shrink:0}.spot .arrow{display:none}.spot small{display:none}.game-footer>span:last-child{display:none}}
 .character{width:6.3%;height:auto;aspect-ratio:0.735}
+
+/* V2: only the room and its status bar occupy the desktop. */
+.shell{max-width:none;padding:12px;height:100dvh;justify-content:center}
+main{flex:none;width:100%;align-items:center;justify-content:center}
+.game{width:min(100%,calc((100dvh - 110px)*2));border-radius:15px}
+.dashboard{height:84px;padding:12px 22px;gap:24px}
+.profile{min-width:180px}.avatar{width:48px;height:48px}.profile-name{font-size:23px}
+.meters{gap:24px}.meter{max-width:200px}.clock{min-width:130px;padding-left:20px}
+.toolbar{display:flex;align-items:center;gap:9px;border-left:1px solid var(--line);padding-left:18px}
+.sprite{background-image:url('/assets/lisa-directions.png');background-size:400% 300%;background-position:0 var(--sprite-row,50%);scale:1 1}
+.character[data-direction="right"],.character[data-direction="left"]{--sprite-row:0%}
+.character[data-direction="down"]{--sprite-row:50%}
+.character[data-direction="up"]{--sprite-row:100%}
+.character[data-direction="left"] .sprite{scale:-1 1}
+@keyframes run{to{background-position:133.333% var(--sprite-row,50%)}}
+@media(max-height:760px){.dashboard{height:70px;padding:9px 14px;gap:16px}.game{width:min(100%,calc((100dvh - 96px)*2))}.profile{min-width:150px}.profile-name{font-size:20px}.meters{gap:18px}.toolbar{padding-left:12px;gap:6px}}
+.character{width:8%;aspect-ratio:1}
