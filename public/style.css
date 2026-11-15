@@ -44,3 +44,5 @@ main{flex:none;width:100%;align-items:center;justify-content:center}
 #version-dialog{width:520px;max-height:80dvh;overflow:auto;text-align:left}#version-dialog ul{padding-left:20px;line-height:1.9;font-size:12px}#version-dialog h3{color:#a36573}
 .room-caption,.room-shade{pointer-events:none}
 @media(max-width:1100px){.dashboard{gap:10px;padding-inline:12px}.profile{min-width:145px}.profile-name{font-size:19px}.meters{gap:12px}.clock{min-width:105px;padding-left:8px}.toolbar{gap:5px;padding-left:8px}}
+/* V6: retain the generated material detail and native proportions. */
+.room-object img{object-fit:contain;filter:drop-shadow(0 3px 3px #52332229)}

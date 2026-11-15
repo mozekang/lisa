@@ -11,7 +11,7 @@ const room=$('room'),character=$('character');
 character.dataset.direction='down';
 function place(){character.style.left=position.x+'%';character.style.top=position.y+'%'}place();
 // Obstacles are furniture footprints in normalized floor-plan coordinates.
-const blocks=[[3,2,33,29],[34,2,96,30],[4,44,29,96],[43,53,60,84],[64,64,98,98],[95,33,99,61]];
+const blocks=[[3,2,33,29],[34,2,96,30],[4,44,29,96],[43,53,60,84],[63,60,98,98],[95,33,99,61]];
 function blocked(x,y){return x<4||x>96||y<32||y>94||blocks.some(([a,b,c,d])=>x>=a&&x<=c&&y>=b&&y<=d)}
 function pathTo(target){const step=2,key=(x,y)=>x+','+y,snap=v=>Math.round(v/step)*step;let sx=snap(position.x),sy=snap(position.y),gx=snap(target.x),gy=snap(target.y);if(blocked(gx,gy))return null;const queue=[[sx,sy]],seen=new Set([key(sx,sy)]),prev=new Map();for(let i=0;i<queue.length;i++){const [x,y]=queue[i];if(x===gx&&y===gy){let p=[{x:gx,y:gy}],k=key(x,y);while(prev.has(k)){const n=prev.get(k);p.push({x:n[0],y:n[1]});k=key(...n)}return p.reverse().slice(1).concat([target])}for(const [dx,dy] of [[2,0],[-2,0],[0,2],[0,-2]]){const nx=x+dx,ny=y+dy,k=key(nx,ny);if(!seen.has(k)&&!blocked(nx,ny)){seen.add(k);prev.set(k,[x,y]);queue.push([nx,ny])}}}return null}
 // Each image has its own button, identity, action and accessible name.
@@ -25,7 +25,7 @@ const objects=[
  ['dryer',57,8,6,23,'乾燥機',60,42],
  ['washer',63,8,6,23,'洗濯機',66,42],
  ['kitchen',69,3,29,28,'キッチン',73,43],
- ['long-table',4,45,5,49,'ロングテーブル',32,64],
+ ['long-table',4,45,6,49,'ロングテーブル',32,64],
  ['bed',10,45,19,49,'ベッド',31,64],
  ['desk',43,52,16,19,'デスク',41,68],
  ['chair',47,68,7,18,'椅子',41,72],
@@ -36,7 +36,7 @@ for(const [id,x,y,w,h,name,tx,ty] of objects){
  const z=original?{...original,id,name,tx,ty}:{id,name,tx,ty,emoji:'✧',actions:[['調べる','お気に入りの家具を眺めた。',0,3,0]]};
  const b=document.createElement('button');b.className='room-object';b.dataset.zone=id;b.dataset.object=id;b.setAttribute('aria-label',name);b.title=name;
  Object.assign(b.style,{left:x+'%',top:y+'%',width:w+'%',height:h+'%'});
- const img=document.createElement('img');img.src='/assets/objects/'+id+'.svg';img.alt='';img.draggable=false;b.append(img);
+ const img=document.createElement('img');img.src='/assets/objects/'+id+'.png';img.alt='';img.draggable=false;b.append(img);
  b.onclick=e=>{e.stopPropagation();room.dispatchEvent(new CustomEvent('objectactivate',{detail:{id}}));go(z)};
  $('objects').append(b);
 }
