@@ -46,3 +46,16 @@ main{flex:none;width:100%;align-items:center;justify-content:center}
 @media(max-width:1100px){.dashboard{gap:10px;padding-inline:12px}.profile{min-width:145px}.profile-name{font-size:19px}.meters{gap:12px}.clock{min-width:105px;padding-left:8px}.toolbar{gap:5px;padding-left:8px}}
 /* V6: retain the generated material detail and native proportions. */
 .room-object img{object-fit:contain;filter:drop-shadow(0 3px 3px #52332229)}
+/* V7 generated frame animations and dinner menu. */
+.activity-sprite{position:absolute;inset:0;width:100%;height:100%;object-fit:contain;pointer-events:none}
+.character.acting .sprite,.character.acting .name-tag,.character.acting .character-shadow{visibility:hidden}
+.character.jumping .activity-sprite{transform:scaleX(-1)}
+.character.eating{width:7%;aspect-ratio:.8}
+#activity-bar{position:absolute;left:50%;bottom:15px;transform:translateX(-50%);z-index:15;display:flex;align-items:center;gap:14px;background:#fff9f0f2;padding:8px 12px 8px 20px;border:1px solid #ead2be;border-radius:26px;font-size:12px;white-space:nowrap}
+#activity-bar button,#dinner-eat{border:0;border-radius:20px;background:#d896a1;color:white;padding:9px 20px;cursor:pointer}
+#activity-bar button:disabled,#dinner-eat:disabled{opacity:.55;cursor:wait}
+.room[data-activity] .room-hint{visibility:hidden}
+#dinner-dialog{width:660px;max-height:88dvh;overflow:auto;padding:28px}
+.dinner-eyebrow{font-size:11px;letter-spacing:2px;color:#b58078}#dinner-dialog h2{margin:10px 0 6px}#dinner-dialog p{margin:6px 0 16px;color:#ac8d7f}
+.dish-list{display:grid;grid-template-columns:1fr 1fr;gap:18px}.dish-list figure{margin:0;background:#f5e9da;border:1px solid #ead6c0;border-radius:20px;padding:15px}.dish-list img{width:100%;height:clamp(100px,22dvh,220px);object-fit:contain;filter:drop-shadow(0 5px 5px #67412a20)}.dish-list figcaption{margin:10px 0 4px;font-size:13px;font-weight:600}#dinner-eat{margin-top:22px}
+@media(prefers-reduced-motion:reduce){.running .sprite{animation:none}.room-object img{transition:none}}
