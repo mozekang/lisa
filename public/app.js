@@ -11,15 +11,18 @@ const room=$('room'),character=$('character');
 character.dataset.direction='down';
 function place(){character.style.left=position.x+'%';character.style.top=position.y+'%'}place();
 // Obstacles are furniture footprints in normalized floor-plan coordinates.
-const blocks=[[3,2,33,29],[34,2,96,30],[4,44,29,96],[43,53,60,84],[63,60,98,98],[95,33,99,61]];
+const blocks=[[3,2,33,36],[34,2,96,36],[4,44,29,96],[43,53,60,84],[63,60,98,98],[95,33,99,61]];
 function blocked(x,y){return x<4||x>96||y<32||y>94||blocks.some(([a,b,c,d])=>x>=a&&x<=c&&y>=b&&y<=d)}
 function pathTo(target){const step=2,key=(x,y)=>x+','+y,snap=v=>Math.round(v/step)*step;let sx=snap(position.x),sy=snap(position.y),gx=snap(target.x),gy=snap(target.y);if(blocked(gx,gy))return null;const queue=[[sx,sy]],seen=new Set([key(sx,sy)]),prev=new Map();for(let i=0;i<queue.length;i++){const [x,y]=queue[i];if(x===gx&&y===gy){let p=[{x:gx,y:gy}],k=key(x,y);while(prev.has(k)){const n=prev.get(k);p.push({x:n[0],y:n[1]});k=key(...n)}return p.reverse().slice(1).concat([target])}for(const [dx,dy] of [[2,0],[-2,0],[0,2],[0,-2]]){const nx=x+dx,ny=y+dy,k=key(nx,ny);if(!seen.has(k)&&!blocked(nx,ny)){seen.add(k);prev.set(k,[x,y]);queue.push([nx,ny])}}}return null}
 // Each image has its own button, identity, action and accessible name.
 const objects=[
- ['wardrobe',4,3,13,28,'クローゼット',32,42],
- ['wardrobe-two',17,3,13,28,'クローゼット 2',32,42],
- ['vase',31,11,5,17,'花瓶',38,42],
- ['robot',44,22,5,10,'ロボット掃除機',46,42],
+ ['wardrobe',1.3,2.7,13.5,31.5,'クローゼット',30,42],
+ ['wardrobe-two',14.8,2.7,13.5,31.5,'リネン収納',32,42],
+ ['plant-stand',28.3,6,7.8,22.5,'グリーンラック',33,42],
+ ['vase',37,9,7.5,15,'三つの花瓶',38,42],
+ ['pet-bowls',35.5,29,5,6,'ペットボウル',37,42],
+ ['penguin',41,26,3.5,9,'ペンギンライト',43,42],
+ ['robot',45.2,25,5.4,11,'ロボット掃除機の充電ステーション',47,42],
  ['fridge',51,9,6,22,'冷蔵庫',56,42],
  ['microwave',51,3,6,8,'電子レンジ',56,42],
  ['dryer',57,8,6,23,'乾燥機',60,42],
@@ -32,19 +35,21 @@ const objects=[
  ['dog',32,70,8,16,'わんこ',39,79]
 ];
 for(const [id,x,y,w,h,name,tx,ty] of objects){
- const original=zones.find(z=>z.id===id)||(id==='wardrobe-two'?zones.find(z=>z.id==='wardrobe'):null);
+ const original=zones.find(z=>z.id===id)||furnishingSpec(id);
  const z=original?{...original,id,name,tx,ty}:{id,name,tx,ty,emoji:'✧',actions:[['調べる','お気に入りの家具を眺めた。',0,3,0]]};
- const b=document.createElement('button');b.className='room-object';b.dataset.zone=id;b.dataset.object=id;b.setAttribute('aria-label',name);b.title=name;
+ const b=document.createElement('button');b.className='room-object'+(id.startsWith('wardrobe')?' wardrobe-object':'');b.dataset.zone=id;b.dataset.object=id;b.setAttribute('aria-label',name);b.title=name;
  Object.assign(b.style,{left:x+'%',top:y+'%',width:w+'%',height:h+'%'});
- const img=document.createElement('img');img.src='/assets/objects/'+id+'.png';img.alt='';img.draggable=false;b.append(img);
+ const img=document.createElement('img');img.src='/assets/objects/'+(id==='penguin'?'penguin-off':id)+'.png';img.alt='';img.draggable=false;b.append(img);
  b.onclick=e=>{e.stopPropagation();room.dispatchEvent(new CustomEvent('objectactivate',{detail:{id}}));go(z)};
  $('objects').append(b);
 }
 
+// Passive storage tower sits behind the charging station, never receives input.
+const storage=document.createElement('div');storage.className='room-decoration';storage.dataset.decoration='storage';Object.assign(storage.style,{left:'45%',top:'8%',width:'4.8%',height:'20%'});storage.innerHTML='<img src="/assets/objects/storage.png" alt="収納ケース" draggable="false">';$('objects').prepend(storage);
 function go(z,target){if(window.stopRoomActivity)window.stopRoomActivity(false);const t=target||{x:z.tx,y:z.ty},p=pathTo(t);if(!p){toast('ここには行けないみたい。空いている床を選んでね。');return}selected=z;route=p;$('menu').hidden=true;document.querySelectorAll('.active').forEach(el=>el.classList.remove('active'));if(z){document.querySelector(`[data-zone="${z.id}"]`).classList.add('active')}$('destination').hidden=false;$('destination').style.left=t.x+'%';$('destination').style.top=t.y+'%';$('status').textContent=z?z.name+'へおでかけ中':'てくてく、おさんぽ';character.classList.add('running');chime()}
 function tick(now){const dt=Math.min((now-last)/1000,.05);last=now;if(route.length){const t=route[0],dx=t.x-position.x,dy=t.y-position.y,aspect=room.clientWidth/room.clientHeight,dist=Math.hypot(dx,dy/aspect),speed=20*dt;if(dist>.001){const horizontal=Math.abs(dx)>Math.abs(dy/aspect);character.dataset.direction=horizontal?(dx>0?'right':'left'):(dy>0?'down':'up')}if(dist<=speed){position={...t};route.shift();if(!route.length)arrive()}else{position.x+=dx/dist*speed;position.y+=dy/dist*speed}place()}requestAnimationFrame(tick)}requestAnimationFrame(tick);
 function arrive(){character.classList.remove('running');$('destination').hidden=true;$('status').textContent=selected?selected.name+'でのんびり':'おへやでのんびり';if(window.onRoomActivityArrive?.())return;if(selected)showMenu(selected)}
-function showMenu(z){const menu=$('menu');menu.innerHTML=`<button class="close" aria-label="閉じる">×</button><h3>${z.emoji} ${z.name}</h3><p>なにをしよう？</p>`;menu.querySelector('.close').onclick=()=>menu.hidden=true;z.actions.forEach(a=>{const b=document.createElement('button');b.textContent=a[0]+'  ›';b.onclick=()=>{applyStats(a.slice(2,5));$('status').textContent=a[0];menu.hidden=true;toast(a[1]);chime()};menu.append(b)});appendActivityActions(menu,z);menu.hidden=false;const width=menu.offsetWidth/room.clientWidth*100,height=menu.offsetHeight/room.clientHeight*100;menu.style.left=Math.max(width/2+2,Math.min(98-width/2,position.x))+'%';menu.style.top=Math.max(height+2,position.y-18)+'%'}
+function showMenu(z){const menu=$('menu');menu.innerHTML=`<button class="close" aria-label="閉じる">×</button><h3>${z.emoji} ${z.name}</h3><p>なにをしよう？</p>`;menu.querySelector('.close').onclick=()=>menu.hidden=true;z.actions.forEach(a=>{const b=document.createElement('button');b.textContent=a[0]+'  ›';b.onclick=()=>{applyStats(a.slice(2,5));if(a[5])a[5]();$('status').textContent=a[0];menu.hidden=true;toast(a[1]);chime()};menu.append(b)});appendActivityActions(menu,z);menu.hidden=false;const width=menu.offsetWidth/room.clientWidth*100,height=menu.offsetHeight/room.clientHeight*100;menu.style.left=Math.max(width/2+2,Math.min(98-width/2,position.x))+'%';menu.style.top=Math.max(height+2,position.y-18)+'%'}
 room.addEventListener('click',e=>{if(e.target.closest('.action-menu,.room-object'))return;const r=room.getBoundingClientRect();go(null,{x:(e.clientX-r.left)/r.width*100,y:(e.clientY-r.top)/r.height*100})});
 function toast(t){clearTimeout(toastTimer);$('toast').textContent=t;$('toast').classList.add('visible');toastTimer=setTimeout(()=>$('toast').classList.remove('visible'),3200)}
 function clock(){const n=new Date();$('date').textContent=new Intl.DateTimeFormat(window.lisaLocale||'ja-JP',{timeZone:'Asia/Shanghai',month:'long',day:'numeric',weekday:'short'}).format(n);$('time').textContent=new Intl.DateTimeFormat(window.lisaLocale||'ja-JP',{timeZone:'Asia/Shanghai',hour:'2-digit',minute:'2-digit',hour12:false}).format(n)}clock();setInterval(clock,10000);
