@@ -1,0 +1,101 @@
+[
+  {
+    "version": "V1",
+    "src": "/assets/history/v1.png",
+    "sourceCommit": "05de1b449a2d859c76b907230179d40198ee761a",
+    "kind": "reconstructed",
+    "capturedAt": "2026-11-16",
+    "viewport": {
+      "width": 1440,
+      "height": 900
+    }
+  },
+  {
+    "version": "V2",
+    "src": "/assets/history/v2.png",
+    "sourceCommit": "dacd0b52883d0a92873075f21c0f4796ac2c114a",
+    "kind": "reconstructed",
+    "capturedAt": "2026-11-16",
+    "viewport": {
+      "width": 1440,
+      "height": 900
+    }
+  },
+  {
+    "version": "V3",
+    "src": "/assets/history/v3.png",
+    "sourceCommit": "acf04a7ec80b5a26feb729ddc4a5e6e03793b33b",
+    "kind": "reconstructed",
+    "capturedAt": "2026-11-16",
+    "viewport": {
+      "width": 1440,
+      "height": 900
+    }
+  },
+  {
+    "version": "V4",
+    "src": "/assets/history/v4.png",
+    "sourceCommit": "ff48793448a985b201fbb3cf9b3b4f88894e9861",
+    "kind": "reconstructed",
+    "capturedAt": "2026-11-16",
+    "viewport": {
+      "width": 1440,
+      "height": 900
+    }
+  },
+  {
+    "version": "V5",
+    "src": "/assets/history/v5.png",
+    "sourceCommit": "73941bd8c53b5f7a5151e2a9b1776c41525f5c3e",
+    "kind": "reconstructed",
+    "capturedAt": "2026-11-16",
+    "viewport": {
+      "width": 1440,
+      "height": 900
+    }
+  },
+  {
+    "version": "V6",
+    "src": "/assets/history/v6.png",
+    "sourceCommit": "80592dbdf10a4dc3001cc08c316beb3e97f052e9",
+    "kind": "reconstructed",
+    "capturedAt": "2026-11-16",
+    "viewport": {
+      "width": 1440,
+      "height": 900
+    }
+  },
+  {
+    "version": "V7",
+    "src": "/assets/history/v7.png",
+    "sourceCommit": "5aa29a40cbe82fb9aa9f09f91e1b0fc38ff3d388",
+    "kind": "reconstructed",
+    "capturedAt": "2026-11-16",
+    "viewport": {
+      "width": 1440,
+      "height": 900
+    }
+  },
+  {
+    "version": "V8",
+    "src": "/assets/history/v8.png",
+    "sourceCommit": "ac0a8d2ae805d90c277859aa0a2e1d60e4df3d5f",
+    "kind": "reconstructed",
+    "capturedAt": "2026-11-16",
+    "viewport": {
+      "width": 1440,
+      "height": 900
+    }
+  },
+  {
+    "version": "V9",
+    "src": "/assets/history/v9.png",
+    "sourceCommit": null,
+    "kind": "release",
+    "capturedAt": "2026-11-17",
+    "viewport": {
+      "width": 1440,
+      "height": 900
+    }
+  }
+]

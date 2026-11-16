@@ -30,18 +30,18 @@ async function startRoomActivity(kind){
  $('activity-bar').hidden=false;$('activity-label').textContent=kind==='sleep'?'おやすみの時間':'いただきます';$('finish-activity').textContent=kind==='sleep'?'起きる':'ごちそうさま';$('finish-activity').disabled=true;
  if(kind==='sleep'){
   phase(a,'jumping');character.classList.add('acting','jumping');pose.hidden=false;sequence(a,'jump',[0,1,2,3],230);
-  const from={left:position.x+'%',top:position.y+'%'},end={left:'20%',top:'64%'};
-  if(!await animate(a,[from,{left:'28%',top:'57%',offset:.35},{left:'23%',top:'48%',offset:.65},end],{duration:920,easing:'ease-in-out'}))return;
+  const from={left:position.x+'%',top:position.y+'%'},end={left:'20%',top:'80%'};
+  if(!await animate(a,[from,{left:'28%',top:'63%',offset:.35},{left:'23%',top:'60%',offset:.65},end],{duration:920,easing:'ease-in-out'}))return;
   character.hidden=true;pose.hidden=true;phase(a,'settling');sequence(a,'sleep',[0,1,2,3],420,()=>{phase(a,'sleeping');$('status').textContent='すやすや、おやすみ';$('finish-activity').disabled=false;sequenceLoop(a,'sleep',[2,3],1500)});
  }else{
-  phase(a,'approaching');const approach=pathTo({x:41,y:86});if(!approach){stopRoomActivity(false);toast('ここには行けないみたい。空いている床を選んでね。');return}
+  phase(a,'approaching');const approach=pathTo({x:41,y:74});if(!approach){stopRoomActivity(false);toast('ここには行けないみたい。空いている床を選んでね。');return}
   route=approach;character.classList.add('running');$('status').textContent='食卓へ移動中';
   if(!await new Promise(resolve=>{a.arriveResolve=resolve;if(!route.length){a.arriveResolve=null;resolve(true)}}))return;
   if(roomActivity!==a)return;a.origin={...position};
   phase(a,'seating');$('status').textContent='椅子に座る';character.classList.add('running');
   // Approach below the desktop; the final short movement seats Lisa into the chair.
-  if(!await animate(a,[{left:position.x+'%',top:position.y+'%'},{left:'46%',top:'86%',offset:.65},{left:'50.5%',top:'83%'}],{duration:700,easing:'ease-in-out'}))return;
-  character.style.left='50.5%';character.style.top='83%';character.classList.remove('running');character.classList.add('acting','eating');pose.hidden=false;objectImage('desk').src='/assets/actions/dinner-desk.png';phase(a,'eating');$('status').textContent='もぐもぐ、ごはんの時間';$('finish-activity').disabled=false;sequenceLoop(a,'eat',[0,1,2,3],550);
+  if(!await animate(a,[{left:position.x+'%',top:position.y+'%'},{left:'46%',top:'74%',offset:.65},{left:'50%',top:'75%'}],{duration:700,easing:'ease-in-out'}))return;
+  character.style.left='50%';character.style.top='75%';character.classList.remove('running');character.classList.add('acting','eating');pose.hidden=false;objectImage('desk').src='/assets/actions/dinner-desk.png';phase(a,'eating');$('status').textContent='もぐもぐ、ごはんの時間';$('finish-activity').disabled=false;sequenceLoop(a,'eat',[0,1,2,3],550);
  }
 }
 function sequenceLoop(a,name,indices,ms){sequence(a,name,indices,ms,()=>sequenceLoop(a,name,indices,ms))}

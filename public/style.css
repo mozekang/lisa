@@ -64,3 +64,13 @@ main{flex:none;width:100%;align-items:center;justify-content:center}
 .room-decoration{position:absolute;pointer-events:none}.room-decoration img{display:block;width:100%;height:100%;object-fit:contain;filter:drop-shadow(0 3px 3px #52332229)}
 #flowers-dialog{width:760px;max-height:88dvh;overflow:auto;padding:28px}#flowers-dialog h2{margin:5px 0}#flowers-dialog>p{color:#a58b7d}
 #flower-options{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:10px}#flower-options button{padding:12px 6px;border:1px solid #e7cdbb;border-radius:16px;background:#f8eee2;cursor:pointer}#flower-options img{width:100%;height:clamp(80px,18dvh,160px);object-fit:contain}#flower-options span{display:block;margin-top:10px;font-size:12px}#flower-options button[aria-pressed="true"]{border-color:#cb7d91;background:#f3dce0;box-shadow:0 0 0 2px #dba2ac55}#flower-status{min-height:24px;margin-bottom:0}
+/* V9: wall-facing furniture and a headboard at the lower wall. */
+[data-object="bed"] img,[data-object="corner-shelf"] img,[data-object="bedside-shelf"] img,[data-object="mirror"] img,[data-object="floor-lamp"] img{object-position:center bottom}
+.window-object{z-index:0}.window-object img{object-fit:fill}
+[data-object="projector"]{z-index:2}
+[data-object="projector"][data-on="false"] img{filter:brightness(.65)}
+.projecting::after{content:'';position:absolute;inset:30% 47% 15% 7%;background:linear-gradient(135deg,#b4d9ff00,#b4d9ff28);clip-path:polygon(100% 100%,0 10%,0 80%);pointer-events:none;z-index:1}
+#version-dialog{width:1000px;max-width:95vw;max-height:90dvh;padding:28px}#history-intro{font-size:12px;color:#a58b7d;line-height:1.8}
+#release-notes{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px}#release-notes section{border:1px solid #e7d1be;border-radius:16px;padding:16px;background:#fff8ee;min-width:0}#release-notes h3{margin:0 0 10px}.snapshot-button{width:100%;padding:0;border:1px solid #ead9c6;border-radius:10px;background:#f5e9dc;overflow:hidden;cursor:pointer}.snapshot-button img{display:block;width:100%;aspect-ratio:1440/900;object-fit:contain}.snapshot-button span{display:block;font-size:11px;padding:7px}.snapshot-source{font-size:10px;color:#a58b7d;line-height:1.7}
+#snapshot-dialog{width:1200px;max-width:96vw;max-height:94dvh;overflow:auto;padding:24px}#snapshot-dialog h2{margin:0 0 12px}#snapshot-image{display:block;width:100%;height:auto;border-radius:10px;border:1px solid #ead5c1}#snapshot-provenance{font-size:11px;color:#a58b7d;margin-bottom:0}
+@media(max-width:1100px){#release-notes{gap:10px}#release-notes section{padding:12px}}
